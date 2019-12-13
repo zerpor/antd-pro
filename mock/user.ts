@@ -79,24 +79,84 @@ export default {
   ],
   'POST /api/login/account': (req: Request, res: Response) => {
     const { password, userName, type } = req.body;
-    if (password === 'ant.design' && userName === 'admin') {
+    if (password === '123456' && userName === 'admin') {
       res.send({
-        status: 'ok',
+        sucess: true,
         type,
-        currentAuthority: 'admin',
+        resultData: {
+          currentAuthority: 'admin',
+          name: 'Serati Ma',
+          avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+          userid: '00000001',
+          email: 'antdesign@alipay.com',
+          signature: '海纳百川，有容乃大',
+          title: '交互专家',
+          group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
+          tags: [
+            {
+              key: '0',
+              label: '很有想法的',
+            },
+          ],
+          notifyCount: 12,
+          unreadCount: 11,
+          country: 'China',
+          geographic: {
+            province: {
+              label: '浙江省',
+              key: '330000',
+            },
+            city: {
+              label: '杭州市',
+              key: '330100',
+            },
+          },
+          address: '西湖区工专路 77 号',
+          phone: '0752-268888888',
+        },
       });
       return;
     }
-    if (password === 'ant.design' && userName === 'user') {
+    if (password === '123456' && userName === 'user') {
       res.send({
-        status: 'ok',
+        sucess: true,
         type,
-        currentAuthority: 'user',
+        resultData: {
+          currentAuthority: 'user',
+          name: 'Joe Black',
+          avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+          userid: '00000002',
+          email: 'antdesign@alipay.com',
+          signature: '海纳百川，有容乃大',
+          title: '交互专家',
+          group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
+          tags: [
+            {
+              key: '0',
+              label: '专注设计',
+            },
+          ],
+          notifyCount: 12,
+          unreadCount: 11,
+          country: 'China',
+          geographic: {
+            province: {
+              label: '浙江省',
+              key: '330000',
+            },
+            city: {
+              label: '杭州市',
+              key: '330100',
+            },
+          },
+          address: '西湖区工专路 77 号',
+          phone: '0752-268888888',
+        },
       });
       return;
     }
     res.send({
-      status: 'error',
+      sucess: false,
       type,
       currentAuthority: 'guest',
     });
