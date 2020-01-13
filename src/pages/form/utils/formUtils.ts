@@ -1,7 +1,16 @@
 import { Form } from 'antd';
 import lodash from 'lodash';
+import { ChangeedField } from '../models/form';
 
-export const shouldUpdateStore = (validating: boolean = false, changedFields: any) => {
+/**
+ * 判断是否要同步更改到store中
+ * @param validating 正在执行表单校验
+ * @param changedFields 当前修改的fields
+ */
+export const shouldUpdateStore = (
+  validating: boolean = false,
+  changedFields: ChangeedField,
+): boolean => {
   let fields = {};
   if (changedFields) {
     fields = changedFields;
@@ -20,10 +29,10 @@ export const shouldUpdateStore = (validating: boolean = false, changedFields: an
   return lodash.findIndex(changedFieldsEntries, (item: any) => !item.dirty) !== -1;
 };
 
-/** store同步fields，只处理一层数据
- * @param {} obj 数据源，changedFiled
- * @param function transfers 对数据做转换
- * @return {} 返回的数据用于接口入参
+/**
+ * 把对象的值mapping到表单域
+ * @param object map的对象
+ * @param transfers 对象中field值的转换
  */
 export const mapObjectToFields = (object, transfers = {}) => {
   const result = {};
@@ -55,4 +64,39 @@ export const mapObjectToFields = (object, transfers = {}) => {
     }
   }
   return result;
+};
+
+const hasMeta = object =>
+  lodash.has(object, 'name') &&
+  lodash.has(object, 'value') &&
+  (lodash.has(object, 'dirty') ||
+    lodash.has(object, 'touched') ||
+    lodash.has(object, 'errors') ||
+    lodash.has(object, 'validating'));
+
+const cleanMeta = object => {
+  lodash.forEach(object, (value, key) => {
+    if (typeof value === 'object' && lodash.isArray(value)) {
+      lodash.forEach(value, item => {
+        cleanMeta(item);
+      });
+    }
+    if (typeof value === 'object' && !hasMeta(value)) {
+      cleanMeta(value);
+    }
+    if (typeof value === 'object' && hasMeta(value)) {
+      object[key] = value.value;
+      // if (value['_isAMomentObject']) {
+      // object[key] = moment(value.value).format();
+      // }
+    }
+  });
+};
+
+export const cleanFieldsMeta = object => {
+  const copyObject = lodash.cloneDeep(object);
+  cleanMeta(copyObject);
+  console.log('copyObject', copyObject);
+
+  return copyObject;
 };

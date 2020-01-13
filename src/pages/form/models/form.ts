@@ -3,6 +3,23 @@ import { Effect } from 'dva';
 import { FormComponentProps } from 'antd/es/form';
 import lodash from 'lodash';
 
+export interface Error {
+  message: string;
+  field: string;
+}
+export interface Field {
+  name: string;
+  value: any;
+  dirty: boolean;
+  touched?: boolean;
+  errors?: Error[];
+  validating?: boolean;
+}
+
+export interface ChangeedField {
+  [propName: string]: Field;
+}
+
 export interface Forms {
   [propName: string]: FormComponentProps['form'];
 }

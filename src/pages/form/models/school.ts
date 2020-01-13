@@ -5,6 +5,7 @@ import produce from 'immer';
 import lodash from 'lodash';
 import { getSchool, submitSchool } from '@/services/school';
 import { normalizeData, denormalizeData } from '../utils/normalizrUtils';
+import { cleanFieldsMeta } from '../utils/formUtils';
 
 export const wholeEntities = {
   collegeListMap: {},
@@ -117,12 +118,15 @@ const Model: ModelType = {
 
       return response;
     },
-    *submitSchool({ payload }, { call, put }) {
+    *submitSchool(_, { call, put, select }) {
       const result = yield put.resolve({
         type: 'form/validateFields',
       });
       if (lodash.isEmpty(result)) {
-        const response = yield call(submitSchool, payload);
+        const { schoolDetail, entities } = yield select(state => state.school);
+        const schoolData = denormalizeData(schoolDetail, entities);
+        const submitData = cleanFieldsMeta(schoolData);
+        const response = yield call(submitSchool, submitData);
 
         return response;
       }
@@ -164,7 +168,10 @@ const Model: ModelType = {
       const nextState = produce(state, draftState => {
         draftState.schoolDetail = {
           ...draftState.schoolDetail,
-          ...changedFields,
+          principal: {
+            ...draftState.schoolDetail?.principal,
+            ...changedFields,
+          },
         };
       });
 
