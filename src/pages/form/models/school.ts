@@ -178,11 +178,13 @@ const Model: ModelType = {
       return { ...nextState };
     },
     addCollegeItem(state, { payload }): ModelState {
-      const { addCollegeItem } = payload;
+      const { addCollegeItem, addProfessionItem, addClassGradeItem } = payload;
 
       const nextState = produce(state, draftState => {
         draftState.schoolDetail.collegeList.push(addCollegeItem.id);
         draftState.entities.collegeListMap[addCollegeItem.id] = addCollegeItem;
+        draftState.entities.professionListMap[addProfessionItem.id] = addProfessionItem;
+        draftState.entities.classGradeListMap[addClassGradeItem.id] = addClassGradeItem;
       });
 
       return { ...nextState };
@@ -213,11 +215,12 @@ const Model: ModelType = {
       return { ...nextState };
     },
     addProfessionItem(state, { payload }): ModelState {
-      const { collegeId, addProfessionItem } = payload;
+      const { collegeId, addProfessionItem, addClassGradeItem } = payload;
 
       const nextState = produce(state, draftState => {
         draftState.entities.collegeListMap[collegeId].professionList.push(addProfessionItem.id);
         draftState.entities.professionListMap[addProfessionItem.id] = addProfessionItem;
+        draftState.entities.classGradeListMap[addClassGradeItem.id] = addClassGradeItem;
       });
 
       return { ...nextState };

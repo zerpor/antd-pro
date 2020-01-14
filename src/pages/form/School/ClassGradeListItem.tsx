@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Card, Form, Button } from 'antd';
+import { Card, Form } from 'antd';
 import { connect } from 'dva';
 import { FormComponentProps } from 'antd/es/form';
 import { Dispatch, AnyAction } from 'redux';
 import FormPlus, { Input } from '@/components/FormPlus';
+import DeleteButton from './components/DeleteButton';
 import { shouldUpdateStore, mapObjectToFields } from '../utils/formUtils';
 
 export interface IProps {
@@ -41,7 +42,7 @@ class ClassGradeListItem extends PureComponent {
         title="班级简介"
         extra={
           <div>
-            <Button size="small" shape="circle-outline" icon="close" onClick={this.handleDelete} />
+            <DeleteButton clickCallback={this.handleDelete} />
           </div>
         }
       >

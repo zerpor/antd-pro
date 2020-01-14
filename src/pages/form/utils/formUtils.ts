@@ -85,18 +85,30 @@ const cleanMeta = object => {
       cleanMeta(value);
     }
     if (typeof value === 'object' && hasMeta(value)) {
+      // eslint-disable-next-line no-param-reassign
       object[key] = value.value;
-      // if (value['_isAMomentObject']) {
-      // object[key] = moment(value.value).format();
-      // }
     }
   });
 };
 
+/**
+ * 清除数据的表单域数据
+ * @param object 数据
+ */
 export const cleanFieldsMeta = object => {
   const copyObject = lodash.cloneDeep(object);
   cleanMeta(copyObject);
-  console.log('copyObject', copyObject);
 
   return copyObject;
+};
+
+/**
+ * 获取字段的真值
+ * @param field 字段
+ */
+export const getFieldValue = (field: ChangeedField | string) => {
+  if (hasMeta(field)) {
+    return field.value;
+  }
+  return field;
 };

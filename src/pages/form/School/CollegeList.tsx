@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import lodash from 'lodash';
 import uuidv4 from 'uuid-v4';
-import { Button } from 'antd';
 import { Dispatch, AnyAction } from 'redux';
-import { COLLEGE } from '../utils/constant';
+import { COLLEGE, PROFESSION, CLASSGRADE } from '../utils/constant';
+import AddButton from './components/AddButton';
 import CollegeListItem from './CollegeListItem';
 
 export interface IProps {
@@ -20,18 +20,41 @@ class CollegeList extends PureComponent<IProps> {
     if (lodash.isArray(collegeList)) {
       collegeNo = collegeList.length + 1;
     }
+    const collegeId = uuidv4();
+    const professionId = uuidv4();
+    const classId = uuidv4();
+
+    const addClassGradeItem = {
+      ...CLASSGRADE,
+      id: classId,
+      schoolId,
+      collegeId,
+      professionId,
+    };
+
+    const addProfessionItem = {
+      ...PROFESSION,
+      id: professionId,
+      schoolId,
+      collegeId,
+      professionNo: 1,
+      classGradeList: [classId],
+    };
 
     const addCollegeItem = {
       ...COLLEGE,
-      id: uuidv4(),
+      id: collegeId,
       schoolId,
       collegeNo,
+      professionList: [professionId],
     };
 
     dispatch({
       type: 'school/addCollegeItem',
       payload: {
         addCollegeItem,
+        addProfessionItem,
+        addClassGradeItem,
       },
     });
   };
@@ -45,7 +68,7 @@ class CollegeList extends PureComponent<IProps> {
           collegeList.map(item => (
             <CollegeListItem key={item} total={collegeList.length} collegeId={item} />
           ))}
-        <Button onClick={this.handleAdd}>Add College</Button>
+        <AddButton clickCallback={this.handleAdd} text="College" />
       </div>
     );
   }

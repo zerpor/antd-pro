@@ -3,28 +3,28 @@ import { Row, Col } from 'antd';
 import { connect } from 'dva';
 import CollegeListItemInfo from './CollegeListItemInfo';
 import ProfessionList from './ProfessionList';
-import { College } from '../models/school';
 
 export interface IProps {
+  schoolId: string;
   collegeId: string;
-  collegeItem: College;
+  professionList: string[];
   total: number;
 }
 
 class CollegeListItem extends PureComponent<IProps> {
   render() {
-    const { collegeItem } = this.props;
+    const { schoolId, collegeId, professionList } = this.props;
 
     return (
       <Row type="flex" gutter={16}>
         <Col span={8}>
-          <CollegeListItemInfo collegeItem={collegeItem} />
+          <CollegeListItemInfo collegeId={collegeId} />
         </Col>
         <Col span={16}>
           <ProfessionList
-            schoolId={collegeItem.schoolId}
-            collegeId={collegeItem.id}
-            professionList={collegeItem.professionList}
+            schoolId={schoolId}
+            collegeId={collegeId}
+            professionList={professionList}
           />
         </Col>
       </Row>
@@ -33,5 +33,6 @@ class CollegeListItem extends PureComponent<IProps> {
 }
 
 export default connect(({ school }, { collegeId }) => ({
-  collegeItem: school?.entities?.collegeListMap[collegeId],
+  schoolId: school?.entities?.collegeListMap[collegeId].schoolId,
+  professionList: school?.entities?.collegeListMap[collegeId].professionList,
 }))(CollegeListItem);

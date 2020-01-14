@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import lodash from 'lodash';
 import uuidv4 from 'uuid-v4';
-import { Button } from 'antd';
 import { Dispatch, AnyAction } from 'redux';
-import { PROFESSION } from '../utils/constant';
+import { PROFESSION, CLASSGRADE } from '../utils/constant';
+import AddButton from './components/AddButton';
 import ProfessionListItem from './ProfessionListItem';
 
 export interface IProps {
@@ -21,13 +21,23 @@ class ProfessionList extends PureComponent<IProps> {
     if (lodash.isArray(professionList)) {
       professionNo = professionList.length + 1;
     }
+    const professionId = uuidv4();
+    const classId = uuidv4();
 
+    const addClassGradeItem = {
+      ...CLASSGRADE,
+      id: classId,
+      schoolId,
+      collegeId,
+      professionId,
+    };
     const addProfessionItem = {
       ...PROFESSION,
-      id: uuidv4(),
+      id: professionId,
       schoolId,
       collegeId,
       professionNo,
+      classGradeList: [classId],
     };
 
     dispatch({
@@ -35,6 +45,7 @@ class ProfessionList extends PureComponent<IProps> {
       payload: {
         collegeId,
         addProfessionItem,
+        addClassGradeItem,
       },
     });
   };
@@ -48,7 +59,7 @@ class ProfessionList extends PureComponent<IProps> {
           professionList.map(item => (
             <ProfessionListItem key={item} total={professionList.length} professionId={item} />
           ))}
-        <Button onClick={this.handleAdd}>Add Profession</Button>
+        <AddButton clickCallback={this.handleAdd} text="Profession" />
       </div>
     );
   }

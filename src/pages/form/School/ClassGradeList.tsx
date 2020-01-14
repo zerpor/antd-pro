@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import lodash from 'lodash';
 import uuidv4 from 'uuid-v4';
-import { Button } from 'antd';
 import { Dispatch, AnyAction } from 'redux';
 import { CLASSGRADE } from '../utils/constant';
+import AddButton from './components/AddButton';
 import ClassGradeListItem from './ClassGradeListItem';
 
 export interface IProps {
@@ -44,7 +44,7 @@ class ClassGradeList extends PureComponent<IProps> {
           classGradeList.map(item => (
             <ClassGradeListItem key={item} total={classGradeList.length} classId={item} />
           ))}
-        <Button onClick={this.handleAdd}>Add Class</Button>
+        <AddButton clickCallback={this.handleAdd} text="Class" />
       </div>
     );
   }

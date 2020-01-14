@@ -1,15 +1,21 @@
 import React, { PureComponent } from 'react';
-import { Card, Form, Button } from 'antd';
+import { Card, Form } from 'antd';
 import { connect } from 'dva';
 import moment from 'moment';
 import { FormComponentProps } from 'antd/es/form';
 import { Dispatch, AnyAction } from 'redux';
 import FormPlus, { Input, InputNumber, DatePicker } from '@/components/FormPlus';
-import { shouldUpdateStore, mapObjectToFields } from '../utils/formUtils';
+import DeleteButton from './components/DeleteButton';
+import { shouldUpdateStore, mapObjectToFields, getFieldValue } from '../utils/formUtils';
+import { rule001 } from '../validation/fieldValidation';
+import { College } from '../models/school';
 
 export interface IProps {
   dispatch: Dispatch<AnyAction>;
   form: FormComponentProps['form'];
+  validating: boolean;
+  collegeItem: College;
+  foundingTime: any;
 }
 
 const layout = {
@@ -34,21 +40,30 @@ class CollegeListItemInfo extends PureComponent {
   };
 
   render() {
-    const { form, collegeItem } = this.props;
+    const { form, collegeItem, foundingTime } = this.props;
 
     return (
       <Card
         title="学院简介"
         extra={
           <div>
-            <Button size="small" shape="circle-outline" icon="close" onClick={this.handleDelete} />
+            <DeleteButton clickCallback={this.handleDelete} />
           </div>
         }
       >
         <FormPlus form={form} formId={collegeItem.id} layoutConfig={layout}>
           <Input label="College Name" formName="name" required maxLength={20} />
           <Input label="Principal" formName="principal" />
-          <DatePicker label="Founding Year" formName="foundingTime" required />
+          <DatePicker
+            label="Founding Year"
+            formName="foundingTime"
+            required
+            rules={[
+              {
+                validator: rule001(foundingTime),
+              },
+            ]}
+          />
           <InputNumber label="Profession Amount" formName="professionAmount" required />
         </FormPlus>
       </Card>
@@ -58,13 +73,13 @@ class CollegeListItemInfo extends PureComponent {
 
 const WrappedForm = Form.create({
   onFieldsChange(props, changedFields) {
-    const { dispatch, validating, collegeItem } = props;
+    const { dispatch, validating, collegeId } = props;
 
     if (shouldUpdateStore(validating, changedFields)) {
       dispatch({
         type: 'school/updateCollegeItem',
         payload: {
-          collegeId: collegeItem.id,
+          collegeId,
           changedFields,
         },
       });
@@ -82,6 +97,8 @@ const WrappedForm = Form.create({
   },
 })(CollegeListItemInfo);
 
-export default connect(({ form }) => ({
+export default connect(({ form, school }, { collegeId }) => ({
   validating: form.validating,
+  foundingTime: getFieldValue(school?.schoolDetail?.foundingTime),
+  collegeItem: school?.entities?.collegeListMap[collegeId],
 }))(WrappedForm);

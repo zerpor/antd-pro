@@ -41,7 +41,7 @@ class SchoolInfo extends PureComponent<IProps> {
     const { form } = this.props;
 
     return (
-      <Card title="学校信息">
+      <Card title="学校简介">
         <FormPlus form={form} formId="schoolinfo" layoutConfig={layout}>
           <Input label="School Name" formName="name" required maxLength={20} />
           <Select
