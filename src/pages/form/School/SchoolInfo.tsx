@@ -6,6 +6,7 @@ import { Dispatch, AnyAction } from 'redux';
 import moment from 'moment';
 import FormPlus, { Input, InputNumber, Select, DatePicker } from '@/components/FormPlus';
 import { shouldUpdateStore, mapObjectToFields } from '../utils/formUtils';
+import styles from './index.less';
 
 export interface IProps {
   dispatch: Dispatch<AnyAction>;
@@ -41,21 +42,23 @@ class SchoolInfo extends PureComponent<IProps> {
     const { form } = this.props;
 
     return (
-      <Card title="学校简介">
-        <FormPlus form={form} formId="schoolinfo" layoutConfig={layout}>
-          <Input label="School Name" formName="name" required maxLength={20} />
-          <Select
-            label="Degree Of Education"
-            formName="degreeEducation"
-            required
-            dicts={degreeDicts}
-          />
-          <DatePicker label="Founding Year" formName="foundingTime" required />
-          <InputNumber label="College Amount" formName="collegeAmount" required />
-          <Input label="School Motto" formName="schoolMotto" />
-          <Input label="Address" formName="address" maxLength={60} />
-        </FormPlus>
-      </Card>
+      <div className={styles.school}>
+        <Card title="学校简介" bordered={false}>
+          <FormPlus form={form} formId="schoolinfo" layoutConfig={layout}>
+            <Input label="School Name" formName="name" required maxLength={20} />
+            <Select
+              label="Degree Of Education"
+              formName="degreeEducation"
+              required
+              dicts={degreeDicts}
+            />
+            <DatePicker label="Founding Year" formName="foundingTime" required />
+            <InputNumber label="College Amount" formName="collegeAmount" required />
+            <Input label="School Motto" formName="schoolMotto" />
+            <Input label="Address" formName="address" maxLength={60} />
+          </FormPlus>
+        </Card>
+      </div>
     );
   }
 }
@@ -83,6 +86,13 @@ const WrappedForm = Form.create({
       schoolMotto: (value: string | object) => value,
       foundingTime: (value: string | object) => (value ? moment(value) : null),
       collegeAmount: (value: string | object) => value,
+      address1: (value: string | object) => value,
+      address2: (value: string | object) => value,
+      address3: (value: string | object) => value,
+      address4: (value: string | object) => value,
+      address5: (value: string | object) => value,
+      address6: (value: string | object) => value,
+      address7: (value: string | object) => value,
     });
   },
 })(SchoolInfo);

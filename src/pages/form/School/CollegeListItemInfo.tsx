@@ -9,6 +9,7 @@ import DeleteButton from './components/DeleteButton';
 import { shouldUpdateStore, mapObjectToFields, getFieldValue } from '../utils/formUtils';
 import { rule001 } from '../validation/fieldValidation';
 import { College } from '../models/school';
+import styles from './index.less';
 
 export interface IProps {
   dispatch: Dispatch<AnyAction>;
@@ -43,30 +44,33 @@ class CollegeListItemInfo extends PureComponent {
     const { form, collegeItem, foundingTime } = this.props;
 
     return (
-      <Card
-        title="学院简介"
-        extra={
-          <div>
-            <DeleteButton clickCallback={this.handleDelete} />
-          </div>
-        }
-      >
-        <FormPlus form={form} formId={collegeItem.id} layoutConfig={layout}>
-          <Input label="College Name" formName="name" required maxLength={20} />
-          <Input label="Principal" formName="principal" />
-          <DatePicker
-            label="Founding Year"
-            formName="foundingTime"
-            required
-            rules={[
-              {
-                validator: rule001(foundingTime),
-              },
-            ]}
-          />
-          <InputNumber label="Profession Amount" formName="professionAmount" required />
-        </FormPlus>
-      </Card>
+      <div className={styles.school}>
+        <Card
+          title="学院简介"
+          bordered={false}
+          extra={
+            <>
+              <DeleteButton clickCallback={this.handleDelete} />
+            </>
+          }
+        >
+          <FormPlus form={form} formId={collegeItem.id} layoutConfig={layout}>
+            <Input label="College Name" formName="name" required maxLength={20} />
+            <Input label="Principal" formName="principal" />
+            <DatePicker
+              label="Founding Year"
+              formName="foundingTime"
+              required
+              rules={[
+                {
+                  validator: rule001(foundingTime),
+                },
+              ]}
+            />
+            <InputNumber label="Profession Amount" formName="professionAmount" required />
+          </FormPlus>
+        </Card>
+      </div>
     );
   }
 }

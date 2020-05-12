@@ -54,13 +54,13 @@ class ProfessionList extends PureComponent<IProps> {
     const { professionList }: any = this.props;
 
     return (
-      <div>
+      <>
         {lodash.isArray(professionList) &&
           professionList.map(item => (
             <ProfessionListItem key={item} total={professionList.length} professionId={item} />
           ))}
         <AddButton clickCallback={this.handleAdd} text="Profession" />
-      </div>
+      </>
     );
   }
 }

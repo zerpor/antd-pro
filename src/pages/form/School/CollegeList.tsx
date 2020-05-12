@@ -63,13 +63,13 @@ class CollegeList extends PureComponent<IProps> {
     const { collegeList } = this.props;
 
     return (
-      <div>
+      <>
         {lodash.isArray(collegeList) &&
           collegeList.map(item => (
             <CollegeListItem key={item} total={collegeList.length} collegeId={item} />
           ))}
         <AddButton clickCallback={this.handleAdd} text="College" />
-      </div>
+      </>
     );
   }
 }

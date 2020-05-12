@@ -56,6 +56,7 @@ const plugins: IPlugin[] = [
       autoAddMenu: true,
     },
   ],
+  ['umi-plugin-antd-theme', themePluginConfig],
 ];
 
 if (isAntDesignProPreview) {

@@ -6,6 +6,7 @@ import { Dispatch, AnyAction } from 'redux';
 import FormPlus, { Input, InputNumber } from '@/components/FormPlus';
 import DeleteButton from './components/DeleteButton';
 import { shouldUpdateStore, mapObjectToFields } from '../utils/formUtils';
+import styles from './index.less';
 
 export interface IProps {
   dispatch: Dispatch<AnyAction>;
@@ -38,19 +39,22 @@ class ProfessionListItemInfo extends PureComponent {
     const { form, professionItem } = this.props;
 
     return (
-      <Card
-        title="专业简介"
-        extra={
-          <div>
-            <DeleteButton clickCallback={this.handleDelete} />
-          </div>
-        }
-      >
-        <FormPlus form={form} formId={professionItem.id} layoutConfig={layout}>
-          <Input label="Profession Name" formName="name" required maxLength={20} />
-          <InputNumber label="Duration Of Study " formName="studyDuration" required />
-        </FormPlus>
-      </Card>
+      <div className={styles.school}>
+        <Card
+          title="专业简介"
+          bordered={false}
+          extra={
+            <>
+              <DeleteButton clickCallback={this.handleDelete} />
+            </>
+          }
+        >
+          <FormPlus form={form} formId={professionItem.id} layoutConfig={layout}>
+            <Input label="Profession Name" formName="name" required maxLength={20} />
+            <InputNumber label="Duration Of Study " formName="studyDuration" required />
+          </FormPlus>
+        </Card>
+      </div>
     );
   }
 }

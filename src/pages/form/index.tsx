@@ -7,6 +7,7 @@ import PageLoading from '@/components/PageLoading';
 import SchoolInfo from './School/SchoolInfo';
 import Principal from './School/Principal';
 import CollegeList from './School/CollegeList';
+import styles from './index.less';
 
 export interface IProps {
   dispatch: Dispatch<AnyAction>;
@@ -49,11 +50,13 @@ class Navigator extends PureComponent<IProps> {
         {loadingOfGetSchool ? (
           <PageLoading />
         ) : (
-          <div>
+          <div className={styles.form}>
             <SchoolInfo />
             <Principal />
             <CollegeList />
-            <Button onClick={this.submit}>提交</Button>
+            <Button type="primary" onClick={this.submit}>
+              提交
+            </Button>
           </div>
         )}
       </>

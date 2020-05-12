@@ -1,4 +1,6 @@
 import { Reducer } from 'redux';
+import { LocalStorageEnum } from '@/enum';
+import { updateTheme } from '@/utils/theme';
 import defaultSettings, { DefaultSettings } from '../../config/defaultSettings';
 
 export interface SettingModelType {
@@ -6,6 +8,7 @@ export interface SettingModelType {
   state: DefaultSettings;
   reducers: {
     changeSetting: Reducer<DefaultSettings>;
+    changeTheme: Reducer<DefaultSettings>;
   };
 }
 
@@ -30,6 +33,19 @@ const SettingModel: SettingModelType = {
       return {
         ...state,
         ...payload,
+      };
+    },
+    changeTheme(state = defaultSettings, { payload }) {
+      const { customerTheme } = payload;
+      if (customerTheme !== state.customerTheme) {
+        localStorage.setItem(LocalStorageEnum.THEME, customerTheme);
+        updateTheme(customerTheme);
+      }
+
+      return {
+        ...state,
+        ...payload,
+        navTheme: customerTheme,
       };
     },
   },

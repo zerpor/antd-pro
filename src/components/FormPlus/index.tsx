@@ -20,6 +20,8 @@ export const removeUndefined = obj => {
   return result;
 };
 
+const defaultLayout = { gutter: { xs: 8, sm: 16, md: 16 } };
+
 interface FormProps {
   formId: string;
   layout?: string;
@@ -65,7 +67,6 @@ class FormPlus extends PureComponent<Iprops> {
 
   splitProps = props => {
     const {
-      formName,
       // Form.Item
       colon,
       extra,
@@ -164,7 +165,7 @@ class FormPlus extends PureComponent<Iprops> {
 
   render() {
     const { layout, layoutConfig } = this.props;
-    const rowProps = layoutConfig.layout || { gutter: { xs: 8, sm: 16, md: 16 } };
+    const rowProps = layoutConfig.layout || defaultLayout;
 
     return (
       <Form layout={layout}>

@@ -1,115 +1,46 @@
 export default {
   theme: [
     {
-      key: 'dark',
       fileName: 'dark.css',
-      theme: 'dark',
-    },
-    {
-      key: 'dust',
-      fileName: 'dust.css',
+      key: 'dark',
       modifyVars: {
-        '@primary-color': '#F5222D',
+        '@primary-color': '#fa8c16', // 全局主色
+        '@link-color': '#fa8c16', // 链接色
+        '@success-color': '#fa8c16', // 成功色
+        '@warning-color': '#fa8c16', // 警告色
+        '@error-color': '#fa8c16', // 错误色
+        '@heading-color': '#ffffff', // 标题色
+        '@text-color': '#ffffff', // 主文本色
+        '@text-color-secondary': '#ffffff', // 次文本色
+        '@disabled-color': '#ffffff', // 失效色
+        '@border-color-base': '#ffffff', // 边框色
       },
     },
     {
-      key: 'volcano',
-      fileName: 'volcano.css',
+      fileName: 'light.css',
+      key: 'light',
       modifyVars: {
-        '@primary-color': '#FA541C',
-      },
-    },
-    {
-      key: 'sunset',
-      fileName: 'sunset.css',
-      modifyVars: {
-        '@primary-color': '#FAAD14',
-      },
-    },
-    {
-      key: 'cyan',
-      fileName: 'cyan.css',
-      modifyVars: {
-        '@primary-color': '#13C2C2',
-      },
-    },
-    {
-      key: 'green',
-      fileName: 'green.css',
-      modifyVars: {
-        '@primary-color': '#52C41A',
-      },
-    },
-    {
-      key: 'geekblue',
-      fileName: 'geekblue.css',
-      modifyVars: {
-        '@primary-color': '#2F54EB',
-      },
-    },
-    {
-      key: 'purple',
-      fileName: 'purple.css',
-      modifyVars: {
-        '@primary-color': '#722ED1',
-      },
-    },
-
-    {
-      key: 'dust',
-      theme: 'dark',
-      fileName: 'dark-dust.css',
-      modifyVars: {
-        '@primary-color': '#F5222D',
-      },
-    },
-    {
-      key: 'volcano',
-      theme: 'dark',
-      fileName: 'dark-volcano.css',
-      modifyVars: {
-        '@primary-color': '#FA541C',
-      },
-    },
-    {
-      key: 'sunset',
-      theme: 'dark',
-      fileName: 'dark-sunset.css',
-      modifyVars: {
-        '@primary-color': '#FAAD14',
-      },
-    },
-    {
-      key: 'cyan',
-      theme: 'dark',
-      fileName: 'dark-cyan.css',
-      modifyVars: {
-        '@primary-color': '#13C2C2',
-      },
-    },
-    {
-      key: 'green',
-      theme: 'dark',
-      fileName: 'dark-green.css',
-      modifyVars: {
-        '@primary-color': '#52C41A',
-      },
-    },
-    {
-      key: 'geekblue',
-      theme: 'dark',
-      fileName: 'dark-geekblue.css',
-      modifyVars: {
-        '@primary-color': '#2F54EB',
-      },
-    },
-    {
-      key: 'purple',
-      theme: 'dark',
-      fileName: 'dark-purple.css',
-      modifyVars: {
-        '@primary-color': '#722ED1',
+        '@primary-color': '#1890ff', // 全局主色
+        '@link-color': '#1890ff', // 链接色
+        '@success-color': '#1890ff', // 成功色
+        '@warning-color': '#1890ff', // 警告色
+        '@error-color': '#1890ff', // 错误色
+        '@heading-color': '#000000', // 标题色
+        '@text-color': '#000000', // 主文本色
+        '@text-color-secondary': '#000000', // 次文本色
+        '@disabled-color': '#000000', // 失效色
+        '@border-color-base': '#000000', // 边框色
       },
     },
   ],
+  // 是否压缩css
+  min: true,
+  // css module
+  isModule: true,
+  // 忽略 antd 的依赖
+  ignoreAntd: false,
+  // 忽略 pro-layout
+  ignoreProLayout: false,
+  // 不使用缓存
+  cache: true,
 };

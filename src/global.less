@@ -4,6 +4,19 @@ html,
 body,
 #root {
   height: 100%;
+
+  :global {
+    .ant-select-selection,
+    .ant-select-dropdown,
+    .ant-input-number-handler-wrap,
+    .ant-input-number,
+    .ant-input-number-input,
+    .ant-input {
+      background: transparent;
+      // border: none;
+      // border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+  }
 }
 
 .colorWeak {
@@ -49,4 +62,14 @@ ol {
       }
     }
   }
+}
+
+.body-wrap-dark {
+  // dark下的全局变量在此定义
+  --main-bg-color: rgba(0, 0, 0, 0.85);
+}
+
+.body-wrap-light {
+  // light下的全局变量在此定义
+  --main-bg-color: #fff;
 }

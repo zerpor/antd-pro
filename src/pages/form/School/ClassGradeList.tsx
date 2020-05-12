@@ -39,13 +39,13 @@ class ClassGradeList extends PureComponent<IProps> {
     const { classGradeList }: any = this.props;
 
     return (
-      <div>
+      <>
         {lodash.isArray(classGradeList) &&
           classGradeList.map(item => (
             <ClassGradeListItem key={item} total={classGradeList.length} classId={item} />
           ))}
         <AddButton clickCallback={this.handleAdd} text="Class" />
-      </div>
+      </>
     );
   }
 }

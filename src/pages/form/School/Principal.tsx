@@ -5,6 +5,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { Dispatch, AnyAction } from 'redux';
 import FormPlus, { Input, InputNumber, Select } from '@/components/FormPlus';
 import { shouldUpdateStore, mapObjectToFields } from '../utils/formUtils';
+import styles from './index.less';
 
 export interface IProps {
   dispatch: Dispatch<AnyAction>;
@@ -30,25 +31,27 @@ class Principal extends PureComponent<IProps> {
     const { form } = this.props;
 
     return (
-      <Card title="校长简介">
-        <FormPlus form={form} formId="schoolinfo" layoutConfig={layout}>
-          <Input label="Name" formName="name" required maxLength={20} />
-          <Select label="Gender" formName="gender" required dicts={genderDicts} />
-          <InputNumber label="Age" formName="age" required />
-          <Input label="Phone No" formName="phoneNo" />
-          <Input
-            label="Email"
-            formName="email"
-            rules={[
-              {
-                type: 'email',
-                message: 'The email address you supplied is invalid.',
-              },
-            ]}
-          />
-          <Input label="Address" formName="address" maxLength={60} />
-        </FormPlus>
-      </Card>
+      <div className={styles.school}>
+        <Card title="校长简介" bordered={false}>
+          <FormPlus form={form} formId="schoolinfo" layoutConfig={layout}>
+            <Input label="Name" formName="name" required maxLength={20} />
+            <Select label="Gender" formName="gender" required dicts={genderDicts} />
+            <InputNumber label="Age" formName="age" required />
+            <Input label="Phone No" formName="phoneNo" />
+            <Input
+              label="Email"
+              formName="email"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'The email address you supplied is invalid.',
+                },
+              ]}
+            />
+            <Input label="Address" formName="address" maxLength={60} />
+          </FormPlus>
+        </Card>
+      </div>
     );
   }
 }

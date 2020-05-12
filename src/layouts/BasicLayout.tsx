@@ -10,7 +10,7 @@ import ProLayout, {
   Settings,
   DefaultFooter,
 } from '@ant-design/pro-layout';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'umi/link';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
@@ -19,9 +19,14 @@ import { formatMessage } from 'umi-plugin-react/locale';
 
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
+import PageLoading from '@/components/PageLoading';
 import { ConnectState } from '@/models/connect';
 import { getAuthorityFromRouter } from '@/utils/utils';
 import logo from '../assets/logo.svg';
+import styles from './BasicLayout.less';
+
+// lazy load SettingDrawer
+const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
 
 const noMatch = (
   <Result
@@ -70,6 +75,7 @@ const footerRender: BasicLayoutProps['footerRender'] = () => defaultFooterDom;
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
   const { dispatch, children, settings, location = { pathname: '/' } } = props;
+  console.log('settings', settings);
 
   const handleMenuCollapse = (payload: boolean): void => {
     if (dispatch) {
@@ -86,6 +92,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 
   return (
     <ProLayout
+      className={styles.basicLayout}
       logo={logo}
       menuHeaderRender={(logoDom, titleDom) => (
         <Link to="/">
@@ -128,6 +135,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       <Authorized authority={authorized!.authority} noMatch={noMatch}>
         {children}
       </Authorized>
+      <Suspense fallback={<PageLoading />}>
+        <SettingDrawer />
+      </Suspense>
     </ProLayout>
   );
 };
